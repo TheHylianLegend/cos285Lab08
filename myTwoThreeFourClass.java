@@ -1,8 +1,27 @@
-public class InsertTTF<E extends Comparable<E>> extends TwoThreeFourTree<E> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class myTwoThreeFourClass<E extends Comparable<E>> extends TwoThreeFourTree<E>{
+
+    public static void main(String[] args) {
+        myTwoThreeFourClass<Integer> TTF = new myTwoThreeFourClass<Integer>();
+        TTF.insert(3);
+        TTF.insert(5);
+        TTF.insert(7);
+        TTF.insert(17);
+        TTF.insert(4);
+        TTF.insert(6);
+        TTF.insert(9);
+        
+        Object[] x = TTF.getSorted();
+        for (int i = 0; i < x.length; i++)
+            System.out.println(x[i]);
+
+    }
 
     /**
-     *@author Herve Badege
-     *@author Ashley Pike
+     * @author Herve Badege
+     * @author Ashley Pike
      * Inserts data into TwoThreeFourTree,
      * splitting nodes if needing while traversing to leaf node
      * 
@@ -11,16 +30,16 @@ public class InsertTTF<E extends Comparable<E>> extends TwoThreeFourTree<E> {
     @Override
     public void insert(E data) {
         Node<E> current = root;
+        
         while (true) {
             if (current.isFull()) {
                 split(current);
                 current = current.getParent();
                 current = getNextChild(current, data);
-            } else if (current.isLeaf()) {
+            } else if (current.isLeaf())
                 break;
-            } else {
+              else 
                 current = getNextChild(current, data);
-            }
         }
         current.insertData(data);
     }
@@ -84,19 +103,48 @@ public class InsertTTF<E extends Comparable<E>> extends TwoThreeFourTree<E> {
         
         return node.getChild(i);
     }
-
+    
+    /** @author Liban Dahir
+     * Returns an array containing all elements in the tree, sorted from smallest to largest.
+     * This method initiates an in-order traversal of the tree, starting from the root, 
+     * to collect all elements in a sorted manner. If the tree is empty, it returns null.
+     *
+     * @return An array of elements sorted in ascending order, or null if the tree is empty.
+     */
+    @Override
+    public E[] getSorted() {
+        if (root == null) {
+            return null;
+        }
+        List<E> list = new ArrayList<>();
+        getSortedHelper(root, list);
+        E[] sortedArray = (E[]) new Comparable[list.size()];
+        sortedArray = list.toArray(sortedArray);
+        return sortedArray;
+    }
+    
+    /**
+     * A helper method for the getSorted method. It performs an in-order traversal 
+     * starting from the given node, adding each visited element to the provided list.
+     * This traversal ensures that elements are added in a sorted order.
+     * 
+     * @param node The current node being visited in the traversal.
+     * @param list The list accumulating the sorted elements.
+     */
+     private void getSortedHelper(Node<E> node, List<E> list) {
+            if (node == null) {
+                return;
+            }
+            for (int i = 0; i < node.size; i++) {
+                getSortedHelper(node.children[i], list);
+                list.add(node.data[i]);
+            }
+            getSortedHelper(node.children[node.size], list);
+        }
 
     @Override
     public boolean contains(E data) {
         // TODO Auto-generated method stub
         return false;
     }
-
-
-    @Override
-    public E[] getSorted() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
-

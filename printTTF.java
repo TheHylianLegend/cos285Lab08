@@ -3,13 +3,13 @@ import java.util.*;
 public class printTTF<E extends Comparable<E>> extends TwoThreeFourTree<E> {
 
 	@Override
-	public void insert(Comparable data) {
+	public void insert(E data) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean contains(Comparable data) {
+	public boolean contains(E data) {
 		// TODO Auto-generated method stub
 		return false;
 	}
