@@ -31,6 +31,7 @@ public class printTTF<E extends Comparable<E>> extends TwoThreeFourTree<E> {
         E[] sortedArray = (E[]) new Comparable[list.size()];
         sortedArray = list.toArray(sortedArray);
         return sortedArray;
+		System.out.println("Hello World");
     }
 	/**
 	 * A helper method for the getSorted method. It performs an in-order traversal 
